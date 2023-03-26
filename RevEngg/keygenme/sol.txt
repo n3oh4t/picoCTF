@@ -1,0 +1,26 @@
+-----REVERSE ENGINEERING-------
+
+Actual Writeup -> https://ctftime.org/writeup/26987
+
+MY solution : Consider the "Reference" image while considering this solution.
+1) Read the code of the file "keygenme-trial.py"
+Note: Part of the flag is already given in the "key_part_static1_trial" , "key_part_static2_trial" variable.
+2) The only part of the flag that needs to be decoded is "key_part_dynamic1_trial" variable
+3) for that go to the "check_key" function.
+4) We can see that it takes the username (which in this case is "GOUGH" -> given in the code) and key. The key needs to be given
+by the user.
+5) Try running the code by giving different keys and see how the program responds. 
+6) However, all that is NOT necessary. Read the code. Its the combination of the above 3 variables (static1_trial , static2_trial and dynamic1_trial)
+
+	Therefore, the correct key would be : picoCTF{1n_7h3_|<3y_of_xxxxxxxx} .
+However, the program still fails. Why? Because the xxxxx part needs to be decoded.
+7) So see the rest of the code. We are using  hashlib function and encoding it and fetching a character at a particular postion and that i 
+being replaced at a particular postition of the key.
+8) Where is that position. The code mentions it as i = 23. If we notice key[23] is 'x' (starting position of the key that needs to be decoded_
+9) Now all I have to do is to replace characters at i=23,24,25.... etc. by performing hashlib operation as shown in the code.
+10) That is what I did in the sol_script.py. The array "arr" in the script contains same values as the code part in hashlib function.
+11) Run the `sol_script.py` and we get the full key = "picoCTF{1n_7h3_|<3y_of_f911a486}"
+
+NOTE : https://stackoverflow.com/questions/41752946/replacing-a-character-from-a-certain-index 
+https://stackoverflow.com/questions/7585307/how-to-correct-typeerror-unicode-objects-must-be-encoded-before-hashing 
+
